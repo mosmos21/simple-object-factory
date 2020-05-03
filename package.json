@@ -10,10 +10,26 @@
     "type": "git",
     "url": "git+https://github.com/mosmos21/simple-object-factory.git"
   },
+  "keywords": [
+    "object",
+    "factory",
+    "factory-bot",
+    "factory-girl",
+    "create",
+    "buld",
+    "trait"
+  ],
   "author": "Takahito Hashimoto",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mosmos21/simple-object-factory/issues"
   },
-  "homepage": "https://github.com/mosmos21/simple-object-factory#readme"
+  "homepage": "https://github.com/mosmos21/simple-object-factory#readme",
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "jest": "^25.5.4",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3",
+    "uglify-js": "^3.9.2"
+  }
 }
