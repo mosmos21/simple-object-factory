@@ -1,0 +1,19 @@
+{
+  "name": "simple-object-factory",
+  "version": "1.0.0",
+  "description": "Define and build/create object.",
+  "main": "index.min.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mosmos21/simple-object-factory.git"
+  },
+  "author": "Takahito Hashimoto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mosmos21/simple-object-factory/issues"
+  },
+  "homepage": "https://github.com/mosmos21/simple-object-factory#readme"
+}
