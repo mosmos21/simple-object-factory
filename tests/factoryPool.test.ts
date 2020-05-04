@@ -1,7 +1,9 @@
 import FactoryPool from '~/factoryPool'
 
 describe('factoryPool.ts', () => {
+  const func = () => ({})
   let factoryPool: FactoryPool
+
   beforeEach(() => factoryPool = new FactoryPool())
   
   describe ('#nextId', () => {
@@ -67,7 +69,6 @@ describe('factoryPool.ts', () => {
   })
 
   describe('#addTrait', () => {
-    const func = () => ({})
     test('When the key is not defined, the error is thrown.', () => {
       expect(() => { factoryPool.addTrait('key', 'name', func)})
         .toThrow(new Error('The key "key" is not defined.'))
@@ -87,8 +88,6 @@ describe('factoryPool.ts', () => {
   })
 
   describe('#getTrait', () => {
-    const func = () => ({})
-
     beforeEach(() => {
       factoryPool.addDefine('key', func)
       factoryPool.addTrait('key', 'name', func)
@@ -106,6 +105,32 @@ describe('factoryPool.ts', () => {
 
     test('The defined function can be retrieved.', () => {
       expect(factoryPool.getTrait('key', 'name')).toEqual(func)
+    })
+  })
+
+  describe('#addCreatro', () => {
+    beforeEach(() => factoryPool.addDefine('key', func))
+
+    test('When the key is not defined, the error is thrown.', () => {
+      expect(() => { factoryPool.addCreator('newKey', func) })
+        .toThrow(new Error('The key "newKey" is not defined.'))
+    })
+
+    test('When the key is defined, the error is not thrown.', () => {
+      expect(() => { factoryPool.addCreator('key', func) }).not.toThrow()
+    })
+  })
+
+  describe('#getCreator', () => {
+    test('When the key is not defined, the error is thrown.', () => {
+      expect(() => { factoryPool.getCreator('newKey') })
+        .toThrow(new Error('The creator for "newKey" is not defined.'))
+    })
+
+    test('A defined creator-function can get.', () => {
+      factoryPool.addDefine('key', func)
+      factoryPool.addCreator('key', func)
+      expect(factoryPool.getCreator('key')).toEqual(func)
     })
   })
 })

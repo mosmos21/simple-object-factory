@@ -6,6 +6,7 @@ export default class FactoryPool {
   private idMap: { [key: string]: number } = {}
   private defineMap: { [key: string]: ObjectBuilderType } = {}
   private traitMap: { [key: string]: { [key: string]: ObjectBuilderType } } = {}
+  private creatorMap: { [key: string]: Function } = {}
 
   public nextId(key: string): number {
     const id = (this.idMap[key] || 0) + 1
@@ -56,5 +57,19 @@ export default class FactoryPool {
       throw new Error(`The trait "${name}" in the key "${key}" is not defined.`)
     }
     return context[name]
+  }
+
+  public addCreator(key: string, func: Function) {
+    if (!this.defineMap[key]) {
+      throw new Error (`The key "${key}" is not defined.`)
+    }
+    this.creatorMap[key] = func
+  }
+
+  public getCreator(key: string): Function {
+    if(!this.creatorMap[key]) {
+      throw new Error(`The creator for "${key}" is not defined.`)
+    }
+    return this.creatorMap[key]
   }
 }
