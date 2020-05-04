@@ -1,5 +1,7 @@
 import sequence from '~/contexts/sequence'
 
+export type Sequence = ReturnType<typeof sequence>
+
 export type Context = {
-  sequence: ReturnType<typeof sequence>
+  sequence: Sequence
 }

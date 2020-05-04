@@ -1,8 +1,6 @@
-const seqFunc = <T>(id: number) => (func: (id: number) => T) => func(id)
-
-const sequence = (id: number) => {
-  of: seqFunc<string>(id)
-  ofNumber: seqFunc<number>(id)
-}
+const sequence = (id: number) => ({
+  of: (func: (id: number) => string) => func(id),
+  ofNumber: (func: (id: number) => number | string) => Number(func(id))
+})
 
 export default sequence
