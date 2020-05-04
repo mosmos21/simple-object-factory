@@ -1,22 +1,25 @@
 import FactoryPool, { ObjectBuilderType } from '~/factoryPool'
 
-type DefineContext<T> = {
-
+export type DefineContext<T = any> = {
+  withTrait: (traits: { [key: string]: ObjectBuilderType<T> }) => DefineContext<T>
 }
 
-const createContext = <T>(key: string): DefineContext<T> => ({
-
+const createContext = <T>(factoryPool: FactoryPool, key: string): DefineContext<T> => ({
+  withTrait: withTrait<T>(factoryPool, key)
 })
 
-const withTrait = <T>(key: string) =>
+const withTrait = <T>(factoryPool: FactoryPool, key: string) =>
   (traits: { [key: string]: ObjectBuilderType<T> }) => {
-
+    Object.entries(traits).forEach(([traitName, func]) => {
+      factoryPool.addTrait(key, traitName, func)
+    })
+    return createContext<T>(factoryPool, key)
   }
 
 const defineObject = (factoryPool: FactoryPool) =>
-  <T>(key: string, func: ObjectBuilderType<T>): DefineContext<T> => {
+  <T,U = Partial<T>>(key: string, func: ObjectBuilderType<T>): DefineContext<U> => {
     factoryPool.addDefine(key, func)
-    return createContext(key)
+    return createContext(factoryPool, key)
   }
 
 export default defineObject

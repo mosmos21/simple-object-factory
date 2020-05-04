@@ -67,7 +67,7 @@ describe('factoryPool.ts', () => {
   })
 
   describe('#addTrait', () => {
-    const func = () => {}
+    const func = () => ({})
     test('When the key is not defined, the error is thrown.', () => {
       expect(() => { factoryPool.addTrait('key', 'name', func)})
         .toThrow(new Error('The key "key" is not defined.'))
@@ -87,7 +87,7 @@ describe('factoryPool.ts', () => {
   })
 
   describe('#getTrait', () => {
-    const func = () => {}
+    const func = () => ({})
 
     beforeEach(() => {
       factoryPool.addDefine('key', func)

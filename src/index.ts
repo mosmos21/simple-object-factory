@@ -1,5 +1,5 @@
 import FactoryPool from '~/factoryPool'
-import defineObject from '~/defineObject'
+import defineObject, { DefineContext } from '~/defineObject'
 import buildObject from '~/buildObject'
 
 const factoryPool = new FactoryPool()
