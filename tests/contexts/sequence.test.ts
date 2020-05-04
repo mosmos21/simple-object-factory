@@ -1,10 +1,16 @@
 import sequence from '~/contexts/sequence'
-import { Sequence } from '~/contexts'
+import { Sequence } from '../../src/contexts'
 
 describe('contexts/sequence', () => {
   let seq: Sequence
 
   beforeEach(() => seq = sequence(1))
+
+  describe('#id', () => {
+    test('Return value is equal id', () => {
+      expect(seq.id).toEqual(1)
+    })
+  })
 
   describe('#of', () => {
     test('A string is returned', () => {
