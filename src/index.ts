@@ -1,9 +1,13 @@
-import FactorryPool from '~/factoryPool'
+import FactoryPool from '~/factoryPool'
+import defineObject from '~/defineObject'
 
-const factoryPool = new FactorryPool()
+const factoryPool = new FactoryPool()
+
+export const define = defineObject(factoryPool)
 
 const ObjectFactory = {
-  factoryPool
+  factoryPool,
+  define
 }
 
 export default ObjectFactory
