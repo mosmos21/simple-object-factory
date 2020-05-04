@@ -23,7 +23,7 @@ export default class FactoryPool {
 
   public addDefine(key: string, func: ObjectBuilderType): void {
     if (this.defineMap[key]) {
-      throw new Error(`Key "${key}": It has already defined.`)
+      throw new Error(`The key "${key}" is already defined.`)
     }
     this.defineMap[key] = func
     this.traitMap[key] = {}
@@ -31,7 +31,7 @@ export default class FactoryPool {
 
   public getDefine(key: string): ObjectBuilderType {
     if (!this.defineMap[key]) {
-      throw new Error(`Key "${key}": It has not defined.`)
+      throw new Error(`The key "${key}" is not defined.`)
     }
     return this.defineMap[key]
   }
@@ -39,7 +39,7 @@ export default class FactoryPool {
   public addTrait(key: string, name: string, func: ObjectBuilderType) {
     const context = this.traitMap[key]
     if (!context) {
-      throw new Error(`Key "${key}": It has not defined.`)
+      throw new Error(`The key "${key}" is not defined.`)
     }
     if (context[name]) {
       throw new Error(`The trait "${name}" in the key "${key}" is already defined.`)
@@ -47,7 +47,14 @@ export default class FactoryPool {
     this.traitMap[key] = { ...context, [name]: func }
   }
 
-  public getTrait(key: string, name: string) {
-
+  public getTrait(key: string, name: string): ObjectBuilderType {
+    const context = this.traitMap[key]
+    if (!context) {
+      throw new Error(`The key "${key}" is not defined.`)
+    }
+    if (!context[name]) {
+      throw new Error(`The trait "${name}" in the key "${key}" is not defined.`)
+    }
+    return context[name]
   }
 }

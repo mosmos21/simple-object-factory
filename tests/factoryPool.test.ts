@@ -49,7 +49,7 @@ describe('factoryPool.ts', () => {
     test('When defining with the exists key, the error is thrown.', () => {
       factoryPool.addDefine('key', _ => {})
       expect(() => { factoryPool.addDefine('key', _ => {}) })
-        .toThrow(new Error('Key "key": It has already defined.'))
+        .toThrow(new Error('The key "key" is already defined.'))
     })
   })
 
@@ -62,27 +62,50 @@ describe('factoryPool.ts', () => {
 
     test('When getting to the new key, the error is thrown.', () => {
       expect(() => { factoryPool.getDefine('newKey' )})
-        .toThrow(new Error('Key "newKey": It has not defined.'))
+        .toThrow(new Error('The key "newKey" is not defined.'))
     })
   })
 
   describe('#addTrait', () => {
     const func = () => {}
-    test('When the key is not registered, the error is thrown.', () => {
+    test('When the key is not defined, the error is thrown.', () => {
       expect(() => { factoryPool.addTrait('key', 'name', func)})
-        .toThrow(new Error('Key "key": It has not defined.'))
+        .toThrow(new Error('The key "key" is not defined.'))
     })
 
-    test('When the key is already registered, the error is not thrown.', () => {
+    test('When the key is already defined, the error is not thrown.', () => {
       factoryPool.addDefine('key', func)
       expect(() => { factoryPool.addTrait('key', 'name', func) }).not.toThrow()
     })
 
-    test('When the trait is registered, the error is thrown.', () => {
+    test('When the trait is defined, the error is thrown.', () => {
       factoryPool.addDefine('key', func)
       factoryPool.addTrait('key', 'name', func)
       expect(() => { factoryPool.addTrait('key', 'name', func) })
         .toThrow(new Error('The trait "name" in the key "key" is already defined.'))
+    })
+  })
+
+  describe('#getTrait', () => {
+    const func = () => {}
+
+    beforeEach(() => {
+      factoryPool.addDefine('key', func)
+      factoryPool.addTrait('key', 'name', func)
+    })
+
+    test('When the key is not defined, the error is thrown.', () => {
+      expect(() => { factoryPool.getTrait('newKey', 'name') })
+        .toThrow(new Error('The key "newKey" is not defined.'))
+    })
+
+    test('When the trait is not defined, the error is thrown.', () => {
+      expect(() => { factoryPool.getTrait('key', 'newTrait') })
+        .toThrow(new Error('The trait "newTrait" in the key "key" is not defined.'))
+    })
+
+    test('The defined function can be retrieved.', () => {
+      expect(factoryPool.getTrait('key', 'name')).toEqual(func)
     })
   })
 })
