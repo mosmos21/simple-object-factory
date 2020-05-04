@@ -2,7 +2,7 @@
   "name": "simple-object-factory",
   "version": "0.0.1",
   "description": "Define and build/create object.",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest"

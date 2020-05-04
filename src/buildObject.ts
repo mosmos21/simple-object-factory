@@ -16,14 +16,14 @@ const mergeObject = (objects: { [key: string]: any }[]) => {
 }
 
 const buildObject = (factoryPool: FactoryPool) =>
-  <T>(key: string, option?: Partial<T>): T => {
+  <T, U = Partial<T>>(key: string, option?: U): U & T => {
     const objectDefine = factoryPool.getDefine(key)
     const context = createContext(factoryPool.nextId(key))
 
     return mergeObject([
       option,
       objectDefine(context)
-    ]) as T
+    ]) as U & T
   }
 
 export default buildObject
