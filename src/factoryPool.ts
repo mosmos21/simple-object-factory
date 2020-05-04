@@ -2,7 +2,19 @@ import { Context } from '~/contexts'
 
 export type ObjectBuilderType<T = any> = (ctx: Context) => T
 
-export default class FactoryPool {
+export interface IFactoryPool {
+  nextId(key: string): number;
+  resetAllId(): void;
+  resetId(key: string): void;
+  addDefine(key: string, func: ObjectBuilderType): void;
+  getDefine(key: string): ObjectBuilderType;
+  addTrait(key: string, name: string, func: ObjectBuilderType): void;
+  getTrait(key: string, name: string): ObjectBuilderType;
+  addCreator(key: string, func: Function): void;
+  getCreator(key: string): Function;
+}
+
+export default class FactoryPool implements IFactoryPool {
   private idMap: { [key: string]: number } = {}
   private defineMap: { [key: string]: ObjectBuilderType } = {}
   private traitMap: { [key: string]: { [key: string]: ObjectBuilderType } } = {}
