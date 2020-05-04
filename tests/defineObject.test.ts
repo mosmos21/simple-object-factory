@@ -29,9 +29,8 @@ describe('defineObject', () => {
   test('The function returns DefineContext', () => {
     const define = defineObject(factoryPool)
 
-    expect(Object.keys(define('key', func))).toEqual(
-     expect.arrayContaining(['withTrait'])
-    )
+    expect(Object.keys(define('key', func)))
+      .toEqual(['withTrait', 'onCreate'])
   })
 
   describe('.withTrait', () => {
@@ -49,9 +48,25 @@ describe('defineObject', () => {
     test('The function returns DefineContext', () => {
       const defineContext = defineObject(factoryPool)('key', func)
 
-      expect(Object.keys(defineContext.withTrait({}))).toEqual(
-        expect.arrayContaining(['withTrait'])
-      )
+      expect(Object.keys(defineContext.withTrait({})))
+        .toEqual(['withTrait', 'onCreate'])
+    })
+  })
+
+  describe('.onCreate', () => {
+    test('factoryPool.addCreator is called.', () => {
+      jest.spyOn(factoryPool, 'addCreator')
+      const defineContext = defineObject(factoryPool)('key', func)
+
+      defineContext.onCreate(_ => ({}))
+      expect(factoryPool.addCreator).toBeCalled()
+    })
+
+    test('The function returns DefineContext', () => {
+      const defineContext = defineObject(factoryPool)('key', func)
+
+      expect(Object.keys(defineContext.onCreate(_ => ({}))))
+        .toEqual(['withTrait', 'onCreate'])
     })
   })
 })
