@@ -8,4 +8,8 @@ describe('exportedFunctions', () => {
   test('ObjectFactory.define is a function', () => {
     expect(typeof ObjectFactory.define).toEqual('function')
   })
+
+  test('ObjectFactory.build is a function', () => {
+    expect(typeof ObjectFactory.build).toEqual('function')
+  })
 })
