@@ -1,5 +1,5 @@
 import sequence from '~/contexts/sequence'
-import { Sequence } from '../../src/contexts'
+import { Sequence } from '~/contexts'
 
 describe('contexts/sequence', () => {
   let seq: Sequence

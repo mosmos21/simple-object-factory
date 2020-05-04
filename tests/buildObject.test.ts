@@ -31,7 +31,7 @@ describe('buildObject', () => {
     const build = buildObject(factoryPool)
     const option =  { name: 'optionalName', value: undefined }
 
-    expect(build('key', option)).toMatchObject({
+    expect(build('key', [], option)).toMatchObject({
       id: 1,
       name: 'optionalName'
     })
