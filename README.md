@@ -1,6 +1,9 @@
 Simple Object Factory
 ===
 
+![](https://github.com/mosmos21/simple-object-factory/workflows/Run%20Test/badge.svg)
+![](https://github.com/mosmos21/simple-object-factory/workflows/Build%20Check/badge.svg)
+
 Define and build/create object.
 
 ## Installation
@@ -16,7 +19,8 @@ $ yarn add simple-object-factory
 
 ```typescript
 import ObjectFactory from 'simple-object-factory'
-import { define, build, create } from 'simple-object-factory' // or, you can import each function individually.
+// or, you can import each function individually.
+import { define, build, create } from 'simple-object-factory' 
 
 type UserAttribute = { id: number, name: string, age: number }
 

@@ -4,7 +4,7 @@ export declare type ObjectBuilderType<T = any> = (ctx: Context) => T;
 export type Sequence = {
   id: number,
   of :(func: (id: number) => string) => string;
-  ofNumber: (func: (id: number) => number) => number;
+  ofNumber: (func: (id: number) => number | string) => number;
 }
 
 
@@ -34,7 +34,8 @@ export interface IFactoryPool {
 }
 
 
-export declare const define: <T, U = Partial<T>>(key: string, func: ObjectBuilderType<T>) => DefineContext<U>;
+export declare const define: <T, U = Partial<T>>(
+  key: string, func: ObjectBuilderType<T>) => DefineContext<U>;
 
 
 export declare const build: <T, U = Partial<T>>(
