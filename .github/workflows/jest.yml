@@ -1,9 +1,9 @@
-name: 'tsc'
+name: 'jest'
 on: [pull_request]
 
 jobs:
-  type-check:
-    name: 'Type Check'
+  test:
+    name: 'Run Test'
     runs-on: ubuntu-latest
 
     steps:
@@ -20,5 +20,5 @@ jobs:
             ${{ runner.os }}-yarn-
       - uses: bahmutov/npm-install@v1.1.0
         if: steps.cache.outputs.cache-hit != 'true'
-      - name: Type check
-        run: yarn run tsc --noEmit
+      - name: Test
+        run: yarn test
