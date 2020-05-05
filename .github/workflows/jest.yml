@@ -1,9 +1,8 @@
-name: 'jest'
+name: 'Run test'
 on: [pull_request]
 
 jobs:
-  test:
-    name: 'Run Test'
+  jest:
     runs-on: ubuntu-latest
 
     steps:
