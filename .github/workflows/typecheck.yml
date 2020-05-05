@@ -1,7 +1,9 @@
+name: 'tsc'
 on: [pull_request]
 
 jobs:
   type-check:
+    name: 'Type Check'
     runs-on: ubuntu-latest
 
     steps:
