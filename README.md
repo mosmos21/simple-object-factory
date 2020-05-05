@@ -7,9 +7,9 @@ Define and build/create object.
 
 ```bash
 # use npm
-$ npm install --save object-comparator
+$ npm install --save simple-object-factory
 # use yarn
-$ yarn add object-comparator
+$ yarn add simple-object-factory
 ```
 
 ## Usage
