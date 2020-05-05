@@ -1,4 +1,6 @@
+.github/
 .idea/
+coverage/
 src/
 tests/
 
