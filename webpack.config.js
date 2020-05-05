@@ -1,7 +1,8 @@
 const path = require('path')
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
+  target: 'node',
   entry: './src/index.ts',
   module: {
     rules: [
@@ -13,13 +14,18 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts'],
+/*    modules: [
+      path.resolve(__dirname, 'src'),
+      'node_modules'
+    ],*/
     alias: {
-      '~': path.resolve(__dirname, 'src/')
+      '~': path.resolve(__dirname, 'src')
     }
   },
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname)
+    path: path.resolve(__dirname),
+    libraryTarget: 'commonjs'
   },
   devtool: 'inline-source-map'
 }
