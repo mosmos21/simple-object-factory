@@ -1,6 +1,6 @@
 {
   "name": "simple-object-factory",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Define and build/create object.",
   "main": "index.js",
   "scripts": {
