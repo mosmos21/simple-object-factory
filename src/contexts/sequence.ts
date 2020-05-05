@@ -1,7 +1,7 @@
 export type Sequence = {
   id: number,
   of :(func: (id: number) => string) => string;
-  ofNumber: (func: (id: number) => number) => number;
+  ofNumber: (func: (id: number) => number | string) => number;
 }
 
 const sequence = (id: number): Sequence => ({
