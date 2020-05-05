@@ -20,7 +20,7 @@ const buildObject = (factoryPool: IFactoryPool) =>
     const objectDefine = factoryPool.getDefine(key)
     const context = createContext(factoryPool.nextId(key))
     const traitObjects = traitNames
-      ? traitNames.map(name => factoryPool.getTrait(key, name))
+      ? traitNames.map(name => factoryPool.getTrait(key, name)(context))
       : []
 
     return mergeObject([

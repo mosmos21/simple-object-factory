@@ -27,7 +27,7 @@ const onCreate = <T>(factoryPool: IFactoryPool, key: string) =>
 const defineObject = (factoryPool: IFactoryPool) =>
   <T,U = Partial<T>>(key: string, func: ObjectBuilderType<T>): DefineContext<U> => {
     factoryPool.addDefine(key, func)
-    return createContext(factoryPool, key)
+    return createContext<U>(factoryPool, key)
   }
 
 export default defineObject
