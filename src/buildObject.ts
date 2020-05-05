@@ -1,4 +1,4 @@
-import FactoryPool from '~/factoryPool'
+import { IFactoryPool } from '~/factoryPool'
 import { createContext } from '~/contexts'
 
 const mergeObject = (objects: { [key: string]: any }[]) => {
@@ -15,7 +15,7 @@ const mergeObject = (objects: { [key: string]: any }[]) => {
   return res
 }
 
-const buildObject = (factoryPool: FactoryPool) =>
+const buildObject = (factoryPool: IFactoryPool) =>
   <T, U = Partial<T>>(key: string, traitNames?: string[], option?: U): U & T => {
     const objectDefine = factoryPool.getDefine(key)
     const context = createContext(factoryPool.nextId(key))
