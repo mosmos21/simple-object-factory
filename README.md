@@ -5,7 +5,7 @@ Define and build/create object.
 
 ## Installation
 
-```
+```bash
 # use npm
 $ npm install --save object-comparator
 # use yarn
