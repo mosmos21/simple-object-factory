@@ -1,7 +1,8 @@
 Simple Object Factory
 ===
 
-![](https://github.com/mosmos21/simple-object-factory/workflows/Run%20test/badge.svg)
+![](https://github.com/mosmos21/simple-object-factory/workflows/Run%20Test/badge.svg)
+![](https://github.com/mosmos21/simple-object-factory/workflows/Build%20Check/badge.svg)
 
 Define and build/create object.
 
