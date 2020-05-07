@@ -5,22 +5,21 @@ export type Sequence = {
 }
 
 
-export declare type Context = {
+export type Context = {
   key: string;
   sequence: Sequence;
   cycleOf: <T>(name: string) => T;
 };
 
 
-export declare type ObjectBuilderType<T = any> = (ctx: Context) => T;
+export type ObjectBuilderType<T = any> = (ctx: Context) => T;
 
 
-export declare type DefineContext<T = any> = {
-  withTrait: (traits: {
-    [key: string]: ObjectBuilderType<T>;
-  }) => DefineContext<T>;
-  onCreate: <U>(func: (object: T) => U) => DefineContext<T>;
-};
+export type DefineContext<T = any> = {
+  withTrait: (traits: { [key: string]: ObjectBuilderType<T> }) => DefineContext<T>
+  withResource: (resources: { [key: string]: any[] }) => DefineContext<T>
+  onCreate: <U>(func: (object: T) => U) => DefineContext<T>
+}
 
 
 export interface IFactoryPool {
@@ -31,6 +30,8 @@ export interface IFactoryPool {
   getDefine(key: string): ObjectBuilderType;
   addTrait(key: string, name: string, func: ObjectBuilderType): void;
   getTrait(key: string, name: string): ObjectBuilderType;
+  addResource(key: string, name: string, resource: any[]): void;
+  getResource<T>(key: string, name: string): T[];
   addCreator(key: string, func: Function): void;
   getCreator(key: string): Function;
 }

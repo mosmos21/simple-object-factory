@@ -108,42 +108,42 @@ describe('factoryPool.ts', () => {
     })
   })
 
-  describe('#addResources', () => {
+  describe('#addResource', () => {
     test('When the key is not defined, the error is thrown.', () => {
-      expect(() => factoryPool.addResources('key', 'name', []))
+      expect(() => factoryPool.addResource('key', 'name', []))
         .toThrow(new Error('The key "key" is not defined.'))
     })
 
     test('When the key is already defined, the error is not thrown.', () => {
       factoryPool.addDefine('key', func)
-      expect(() => factoryPool.addResources('key', 'name',[])).not.toThrow()
+      expect(() => factoryPool.addResource('key', 'name',[])).not.toThrow()
     })
 
-    test('When the resources is defined, the error is thrown.', () => {
+    test('When the resource is defined, the error is thrown.', () => {
       factoryPool.addDefine('key', func)
-      factoryPool.addResources('key', 'name', [])
-      expect(() => factoryPool.addResources('key', 'name', []))
-        .toThrow(new Error('The resources "name" in the key "key" is already defined.'))
+      factoryPool.addResource('key', 'name', [])
+      expect(() => factoryPool.addResource('key', 'name', []))
+        .toThrow(new Error('The resource "name" in the key "key" is already defined.'))
     })
   })
 
-  describe('#getResources', () => {
+  describe('#getResource', () => {
     test('When the key is not defined, the error is thrown.', () => {
-      expect(() => factoryPool.getResources('key', 'name'))
+      expect(() => factoryPool.getResource('key', 'name'))
         .toThrow(new Error('The key "key" is not defined.'))
     })
 
     test('When the name is not defined, the error is thrown.', () => {
       factoryPool.addDefine('key', func)
-      factoryPool.addResources('key', 'foo', [])
-      expect(() => factoryPool.getResources('key', 'name'))
-        .toThrow(new Error('The resources "name" in the key "key" is not defined.'))
+      factoryPool.addResource('key', 'foo', [])
+      expect(() => factoryPool.getResource('key', 'name'))
+        .toThrow(new Error('The resource "name" in the key "key" is not defined.'))
     })
 
     test('A defined resource can get.', () => {
       factoryPool.addDefine('key', func)
-      factoryPool.addResources('key', 'name', [])
-      expect(factoryPool.getResources('key', 'name')).toEqual([])
+      factoryPool.addResource('key', 'name', [])
+      expect(factoryPool.getResource('key', 'name')).toEqual([])
     })
   })
 

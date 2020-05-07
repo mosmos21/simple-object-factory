@@ -5,7 +5,7 @@ describe('contexts/cycleOf', () => {
   const factoryPool = new FactoryPool()
 
   test('', () => {
-    jest.spyOn(factoryPool, 'getResources')
+    jest.spyOn(factoryPool, 'getResource')
       .mockImplementation(() => ['foo', 'bar'])
     expect(cycleOf('key', factoryPool, 1)('name')).toEqual('foo')
     expect(cycleOf('key', factoryPool, 2)('name')).toEqual('bar')
