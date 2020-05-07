@@ -1,6 +1,3 @@
-export declare type ObjectBuilderType<T = any> = (ctx: Context) => T;
-
-
 export type Sequence = {
   id: number,
   of :(func: (id: number) => string) => string;
@@ -8,17 +5,21 @@ export type Sequence = {
 }
 
 
-export declare type DefineContext<T = any> = {
-  withTrait: (traits: {
-    [key: string]: ObjectBuilderType<T>;
-  }) => DefineContext<T>;
-  onCreate: <U>(func: (object: T) => U) => DefineContext<T>;
-};
-
-
-export declare type Context = {
+export type Context = {
+  key: string;
   sequence: Sequence;
+  cycleOf: <T>(name: string) => T;
 };
+
+
+export type ObjectBuilderType<T = any> = (ctx: Context) => T;
+
+
+export type DefineContext<T = any> = {
+  withTrait: (traits: { [key: string]: ObjectBuilderType<T> }) => DefineContext<T>
+  withResource: (resources: { [key: string]: any[] }) => DefineContext<T>
+  onCreate: <U>(func: (object: T) => U) => DefineContext<T>
+}
 
 
 export interface IFactoryPool {
@@ -29,6 +30,8 @@ export interface IFactoryPool {
   getDefine(key: string): ObjectBuilderType;
   addTrait(key: string, name: string, func: ObjectBuilderType): void;
   getTrait(key: string, name: string): ObjectBuilderType;
+  addResource(key: string, name: string, resource: any[]): void;
+  getResource<T>(key: string, name: string): T[];
   addCreator(key: string, func: Function): void;
   getCreator(key: string): Function;
 }
@@ -48,9 +51,13 @@ export declare const create: <T, U = Partial<T>, V = any>(
 
 declare const ObjectFactory: {
   factoryPool: IFactoryPool;
-  define: <T, U = Partial<T>>(key: string, func: ObjectBuilderType<T>) => DefineContext<U>;
+
+  define: <T, U = Partial<T>>(
+    key: string, func: ObjectBuilderType<T>) => DefineContext<U>;
+
   build: <T_1, U_1 = Partial<T_1>>(
     key: string, traitNames?: string[] | undefined, option?: U_1 | undefined) => U_1 & T_1;
+
   create: <T_2, U_2 = Partial<T_2>, V = any>(
     key: string, traitNames?: string[] | undefined, option?: U_2 | undefined) => V;
 

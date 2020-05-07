@@ -30,7 +30,7 @@ describe('defineObject', () => {
     const define = defineObject(factoryPool)
 
     expect(Object.keys(define('key', func)))
-      .toEqual(['withTrait', 'onCreate'])
+      .toEqual(['withTrait', 'withResource', 'onCreate'])
   })
 
   describe('.withTrait', () => {
@@ -49,7 +49,27 @@ describe('defineObject', () => {
       const defineContext = defineObject(factoryPool)('key', func)
 
       expect(Object.keys(defineContext.withTrait({})))
-        .toEqual(['withTrait', 'onCreate'])
+        .toEqual(['withTrait', 'withResource', 'onCreate'])
+    })
+  })
+
+  describe('.withResource', () => {
+    test('factoryPool.addResource is called twice.', () => {
+      jest.spyOn(factoryPool, 'addResource')
+      const defineContext = defineObject(factoryPool)('key', func)
+
+      defineContext.withResource({
+        resource_a: [1, 2, 3],
+        resource_b: ['foo', 'bar', 'baz']
+      })
+      expect(factoryPool.addResource).toBeCalledTimes(2)
+    })
+
+    test('The function returns DefineContext', () => {
+      const defineContext = defineObject(factoryPool)('key', func)
+
+      expect(Object.keys(defineContext.withResource({})))
+        .toEqual(['withTrait', 'withResource', 'onCreate'])
     })
   })
 
@@ -66,7 +86,7 @@ describe('defineObject', () => {
       const defineContext = defineObject(factoryPool)('key', func)
 
       expect(Object.keys(defineContext.onCreate(_ => ({}))))
-        .toEqual(['withTrait', 'onCreate'])
+        .toEqual(['withTrait', 'withResource', 'onCreate'])
     })
   })
 })
