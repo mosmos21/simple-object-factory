@@ -10,6 +10,8 @@ export interface IFactoryPool {
   getDefine(key: string): ObjectBuilderType;
   addTrait(key: string, name: string, func: ObjectBuilderType): void;
   getTrait(key: string, name: string): ObjectBuilderType;
+  addResources(key: string, name: string, resources: any[]): void;
+  getResources<T>(key: string, name: string): T[];
   addCreator(key: string, func: Function): void;
   getCreator(key: string): Function;
 }
@@ -18,6 +20,7 @@ export default class FactoryPool implements IFactoryPool {
   private idMap: { [key: string]: number } = {}
   private defineMap: { [key: string]: ObjectBuilderType } = {}
   private traitMap: { [key: string]: { [key: string]: ObjectBuilderType } } = {}
+  private resourcesMap: { [key: string]: { [key: string]: any[] } } = {}
   private creatorMap: { [key: string]: Function } = {}
 
   public nextId(key: string): number {
@@ -40,6 +43,7 @@ export default class FactoryPool implements IFactoryPool {
     }
     this.defineMap[key] = func
     this.traitMap[key] = {}
+    this.resourcesMap[key] = {}
   }
 
   public getDefine(key: string): ObjectBuilderType {
@@ -67,6 +71,28 @@ export default class FactoryPool implements IFactoryPool {
     }
     if (!context[name]) {
       throw new Error(`The trait "${name}" in the key "${key}" is not defined.`)
+    }
+    return context[name]
+  }
+
+  public addResources(key: string, name: string, resources: any[]) {
+    const context = this.resourcesMap[key]
+    if (!context) {
+      throw new Error(`The key "${key}" is not defined.`)
+    }
+    if (context[name]) {
+      throw new Error(`The resources "${name}" in the key "${key}" is already defined.`)
+    }
+    this.resourcesMap[key] = { ...context, [name]: resources }
+  }
+
+  public getResources<T = any>(key: string, name: string): T[] {
+    const context = this.resourcesMap[key]
+    if (!context) {
+      throw new Error(`The key "${key}" is not defined.`)
+    }
+    if (!context[name]) {
+      throw new Error(`The resources "${name}" in the key "${key}" is not defined.`)
     }
     return context[name]
   }
