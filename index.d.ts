@@ -12,6 +12,7 @@ export type DefineContext<T = any> = {
   withTrait: (traits: { [key: string]: ObjectBuilderType<T> }) => DefineContext<T>
   withResource: (resources: { [key: string]: any[] }) => DefineContext<T>
   onCreate: <U>(func: (object: T) => U) => DefineContext<T>
+  onCreateWithClass: <U extends { new(attr: T): any }>(clazz: U) => DefineContext<T>
 }
 
 
