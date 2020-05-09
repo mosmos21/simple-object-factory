@@ -1,12 +1,9 @@
-import sequence from '~/contexts/sequence'
 import cycleOf from '~/contexts/cycleOf'
 import { IFactoryPool } from '~/factoryPool'
 
-export type Sequence = ReturnType<typeof sequence>
-
 export type Context = {
   key: string
-  sequence: Sequence,
+  id: number
   cycleOf: <T>(name: string) => T
 }
 
@@ -15,7 +12,7 @@ export const createContext = (key: string, factoryPool: IFactoryPool): Context =
 
   return {
     key,
-    sequence: sequence(id),
+    id,
     cycleOf: cycleOf(key, factoryPool, id)
   }
 }

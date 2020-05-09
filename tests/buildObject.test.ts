@@ -2,8 +2,8 @@ import FactoryPool, { ObjectBuilderType } from '~/factoryPool'
 import buildObject from '~/buildObject'
 
 describe('buildObject', () => {
-  const func: ObjectBuilderType = (({ sequence }) => ({
-    id: sequence.id,
+  const func: ObjectBuilderType = (({ id }) => ({
+    id: id,
     name: 'objectName',
     value: undefined
   }))
