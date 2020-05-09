@@ -1,7 +1,7 @@
 {
   "name": "simple-object-factory",
   "version": "1.1.0",
-  "description": "Define and build/create object.",
+  "description": "Define and build/create object for test.",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
