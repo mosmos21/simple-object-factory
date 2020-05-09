@@ -30,9 +30,9 @@ class User {
 }
 
 ObjectFactory
-  .define<UserAttribute>('user', ({ sequence }) => ({
-    id: sequence.id,
-    name: sequence.of(id => `userName${id}`),
+  .define<UserAttribute>('user', ({ id }) => ({
+    id: id,
+    name: `userName${id}`,
     age: 20
   }))
   .withTrait({

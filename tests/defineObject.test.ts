@@ -8,8 +8,8 @@ type T = {
 }
 
 describe('defineObject', () => {
-  const func: ObjectBuilderType<T> = (({ sequence }) => ({
-    id: sequence.id,
+  const func: ObjectBuilderType<T> = (({ id }) => ({
+    id: id,
     name: 'foo',
     value: 1
   }))
