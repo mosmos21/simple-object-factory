@@ -18,7 +18,7 @@ const mergeObject = (objects: { [key: string]: any }[]) => {
 const buildObject = (factoryPool: IFactoryPool) =>
   <T, U = Partial<T>>(key: string, traitNames?: string[], option?: U): U & T => {
     const objectDefine = factoryPool.getDefine(key)
-    const context = createContext(factoryPool.nextId(key))
+    const context = createContext(key, factoryPool)
     const traitObjects = traitNames
       ? traitNames.map(name => factoryPool.getTrait(key, name)(context))
       : []

@@ -8,8 +8,9 @@ type T = {
 }
 
 describe('defineObject', () => {
-  const func: ObjectBuilderType<T> = (({ sequence }) => ({
-    id: sequence.id,
+  const contextNames = ['withTrait', 'withResource', 'onCreate', 'onCreateWithClass']
+  const func: ObjectBuilderType<T> = (({ id }) => ({
+    id: id,
     name: 'foo',
     value: 1
   }))
@@ -29,8 +30,7 @@ describe('defineObject', () => {
   test('The function returns DefineContext', () => {
     const define = defineObject(factoryPool)
 
-    expect(Object.keys(define('key', func)))
-      .toEqual(['withTrait', 'onCreate'])
+    expect(Object.keys(define('key', func))).toEqual(contextNames)
   })
 
   describe('.withTrait', () => {
@@ -48,8 +48,26 @@ describe('defineObject', () => {
     test('The function returns DefineContext', () => {
       const defineContext = defineObject(factoryPool)('key', func)
 
-      expect(Object.keys(defineContext.withTrait({})))
-        .toEqual(['withTrait', 'onCreate'])
+      expect(Object.keys(defineContext.withTrait({}))).toEqual(contextNames)
+    })
+  })
+
+  describe('.withResource', () => {
+    test('factoryPool.addResource is called twice.', () => {
+      jest.spyOn(factoryPool, 'addResource')
+      const defineContext = defineObject(factoryPool)('key', func)
+
+      defineContext.withResource({
+        resource_a: [1, 2, 3],
+        resource_b: ['foo', 'bar', 'baz']
+      })
+      expect(factoryPool.addResource).toBeCalledTimes(2)
+    })
+
+    test('The function returns DefineContext', () => {
+      const defineContext = defineObject(factoryPool)('key', func)
+
+      expect(Object.keys(defineContext.withResource({}))).toEqual(contextNames)
     })
   })
 
@@ -65,8 +83,26 @@ describe('defineObject', () => {
     test('The function returns DefineContext', () => {
       const defineContext = defineObject(factoryPool)('key', func)
 
-      expect(Object.keys(defineContext.onCreate(_ => ({}))))
-        .toEqual(['withTrait', 'onCreate'])
+      expect(Object.keys(defineContext.onCreate(_ => ({})))).toEqual(contextNames)
     })
+  })
+
+  describe('.onCreateWithClass', () => {
+    class Foo {}
+    test('factoryPool.addCreator is received the function, returning a value of the instance of Foo.', () => {
+      jest.spyOn(factoryPool, 'addCreator').mockImplementation((key, func) => {
+        expect(key).toEqual('key')
+        expect(func(Foo)).toBeInstanceOf(Foo)
+      })
+      const defineContext = defineObject(factoryPool)('key', func)
+      defineContext.onCreateWithClass(Foo)
+    })
+  })
+
+  test('The function returns DefineContext', () => {
+    class Foo {}
+    const defineContext = defineObject(factoryPool)('key', func)
+
+    expect(Object.keys(defineContext.onCreateWithClass(Foo))).toEqual(contextNames)
   })
 })
