@@ -106,17 +106,28 @@ The values of `Context` are as follows.
 It can call after ObjectFactory.define().
 The argument is the object; the key is trait name, and the value is function receive `Context` and returns an object.
 
+
 #### withResource(resources: { [key: string]: any[] }) => DefineContext\<T\>
 
 It can call after ObjectFactory.define().
 The argument is the object; the key is resource name, and the value is array.
 
-#### onCreate<U>(func: (object: T) => U) => DefineContext<T>
+
+#### onCreate\<U\>(func: (object: T) => U) => DefineContext\<T\>
 
 It can call after ObjectFactory.define().
 The argument is the function, receive the value of built and returns any value.
 
 
-### onCreateWithClass<U extends { new(attr: T): any }>(clazz: U) => DefineContext<T>
+### onCreateWithClass\<U extends { new(attr: T): any }\>(clazz: U) => DefineContext\<T\>
 
 It equals `onCreaate(attr => new clazz)`
+
+
+#### build\<T, U = Partial\<T\>\>(key: string, traitNames?: string[], option?: U) => U & T
+
+Pass the key; it returns the object defined in "define()".
+
+#### create\<T, U = Partial\<T\>, V = any\>(key: string, traitNames?: string[], option?: U) => V
+
+Pass the key; it returns the object defined in "define()" and "onCreate()".
