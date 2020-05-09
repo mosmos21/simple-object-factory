@@ -8,6 +8,7 @@ type T = {
 }
 
 describe('defineObject', () => {
+  const contextNames = ['withTrait', 'withResource', 'onCreate', 'onCreateWithClass']
   const func: ObjectBuilderType<T> = (({ id }) => ({
     id: id,
     name: 'foo',
@@ -29,8 +30,7 @@ describe('defineObject', () => {
   test('The function returns DefineContext', () => {
     const define = defineObject(factoryPool)
 
-    expect(Object.keys(define('key', func)))
-      .toEqual(['withTrait', 'withResource', 'onCreate'])
+    expect(Object.keys(define('key', func))).toEqual(contextNames)
   })
 
   describe('.withTrait', () => {
@@ -48,8 +48,7 @@ describe('defineObject', () => {
     test('The function returns DefineContext', () => {
       const defineContext = defineObject(factoryPool)('key', func)
 
-      expect(Object.keys(defineContext.withTrait({})))
-        .toEqual(['withTrait', 'withResource', 'onCreate'])
+      expect(Object.keys(defineContext.withTrait({}))).toEqual(contextNames)
     })
   })
 
@@ -68,8 +67,7 @@ describe('defineObject', () => {
     test('The function returns DefineContext', () => {
       const defineContext = defineObject(factoryPool)('key', func)
 
-      expect(Object.keys(defineContext.withResource({})))
-        .toEqual(['withTrait', 'withResource', 'onCreate'])
+      expect(Object.keys(defineContext.withResource({}))).toEqual(contextNames)
     })
   })
 
@@ -85,8 +83,26 @@ describe('defineObject', () => {
     test('The function returns DefineContext', () => {
       const defineContext = defineObject(factoryPool)('key', func)
 
-      expect(Object.keys(defineContext.onCreate(_ => ({}))))
-        .toEqual(['withTrait', 'withResource', 'onCreate'])
+      expect(Object.keys(defineContext.onCreate(_ => ({})))).toEqual(contextNames)
     })
+  })
+
+  describe('.onCreateWithClass', () => {
+    class Foo {}
+    test('factoryPool.addCreator is received the function, returning a value of the instance of Foo.', () => {
+      jest.spyOn(factoryPool, 'addCreator').mockImplementation((key, func) => {
+        expect(key).toEqual('key')
+        expect(func(Foo)).toBeInstanceOf(Foo)
+      })
+      const defineContext = defineObject(factoryPool)('key', func)
+      defineContext.onCreateWithClass(Foo)
+    })
+  })
+
+  test('The function returns DefineContext', () => {
+    class Foo {}
+    const defineContext = defineObject(factoryPool)('key', func)
+
+    expect(Object.keys(defineContext.onCreateWithClass(Foo))).toEqual(contextNames)
   })
 })
